@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ultimate Receipt Generator - 24 Templates</title>
+    <title>Ultimate Receipt Generator</title>
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -571,20 +571,7 @@
     </style>
 </head>
 <body>
-    <div class="main-header">
-        <h1>🚀 ULTIMATE Receipt Generator</h1>
-        <p class="subtitle" style="font-size: 18px; opacity: 0.95;">24 Professional Templates • Uganda-Inspired • Fully Customizable</p>
-        <div class="feature-badges">
-            <span class="badge">✨ 24 Templates</span>
-            <span class="badge">💾 Save & Load</span>
-            <span class="badge">📤 Export</span>
-            <span class="badge">🖼️ Logo Support</span>
-            <span class="badge">💰 Multi-Currency</span>
-            <span class="badge">🧮 Tax & Discounts</span>
-            <span class="badge">📊 Bulk Generate</span>
-            <span class="badge">🇺🇬 Uganda Receipts</span>
-        </div>
-    </div>
+ 
 
     <div class="notification" id="notification">
         <h3 style="margin-bottom: 10px;">✅ Success!</h3>
@@ -639,9 +626,14 @@
                 <div class="section-header">Receipt Information</div>
 
                 <div class="form-row">
-                    <div class="form-group">
-                        <label>Receipt Number:</label>
-                        <input type="text" id="receiptNo" value="REC-00001" placeholder="REC-00001">
+                    <div class="form-group" style="display:flex;gap:8px;align-items:center;">
+                        <div style="flex:1;">
+                            <label>Receipt Number:</label>
+                            <input type="text" id="receiptNo" value="REC-00001" placeholder="REC-00001">
+                        </div>
+                        <div style="width:160px;margin-top:20px;">
+                            <button type="button" onclick="regenerateReceiptNumber()" class="btn-secondary" style="width:100%;padding:8px 10px;font-size:13px;">🔁 Regenerate</button>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label>Currency:</label>
@@ -993,6 +985,41 @@ Goods once sold are not returnable</textarea>
         let currentTemplate = 1;
         let logoDataUrl = null;
 
+        /**
+         * Generate a unique, random receipt number.
+         * Uses `crypto.randomUUID()` when available, otherwise falls back to a timestamp + random chars.
+         * Example: RCPT-20251211-5F3A9B
+         */
+        function generateReceiptNumber() {
+            try {
+                if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+                    // Use UUID but shorten it for readability
+                    return 'RCPT-' + crypto.randomUUID().split('-')[0].toUpperCase();
+                }
+            } catch (e) {
+                // fallthrough to fallback
+            }
+
+            const pad = (n) => n.toString().padStart(2, '0');
+            const d = new Date();
+            const datePart = d.getFullYear().toString() + pad(d.getMonth()+1) + pad(d.getDate());
+
+            // generate 6 random alphanumeric uppercase chars
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let rnd = '';
+            if (typeof crypto !== 'undefined' && crypto.getRandomValues) {
+                const arr = new Uint32Array(6);
+                crypto.getRandomValues(arr);
+                for (let i = 0; i < arr.length; i++) {
+                    rnd += chars[arr[i] % chars.length];
+                }
+            } else {
+                for (let i = 0; i < 6; i++) rnd += chars[Math.floor(Math.random() * chars.length)];
+            }
+
+            return `RCPT-${datePart}-${rnd}`;
+        }
+
         document.getElementById('receiptDate').valueAsDate = new Date();
 
         function switchTab(index) {
@@ -1024,6 +1051,13 @@ Goods once sold are not returnable</textarea>
                 };
                 reader.readAsDataURL(file);
             }
+        }
+
+        function regenerateReceiptNumber() {
+            const newNo = generateReceiptNumber();
+            document.getElementById('receiptNo').value = newNo;
+            generateReceipt();
+            showNotification('Receipt number regenerated');
         }
 
         function calculateItemAmount(itemEntry) {
@@ -1303,6 +1337,11 @@ Goods once sold are not returnable</textarea>
         }
 
         function saveReceipt() {
+            // Ensure saved receipts get a fresh unique receipt number
+            const newReceiptNo = generateReceiptNumber();
+            document.getElementById('receiptNo').value = newReceiptNo;
+            generateReceipt();
+
             const receiptName = document.getElementById('receiptName').value || 'Unnamed Receipt';
             const receiptData = {
                 name: receiptName,
@@ -1532,19 +1571,19 @@ Goods once sold are not returnable</textarea>
             }
 
             const preview = document.getElementById('receiptPreview');
-            const baseReceiptNo = document.getElementById('receiptNo').value;
-
             preview.innerHTML = '';
 
+            // Generate unique receipt numbers for each copy
             for (let i = 0; i < count; i++) {
-                document.getElementById('receiptNo').value = `${baseReceiptNo}-${i + 1}`;
+                const genNo = generateReceiptNumber();
+                document.getElementById('receiptNo').value = genNo;
                 generateReceipt();
                 setTimeout(() => {
-                    preview.innerHTML += document.querySelector('.receipt').outerHTML;
-                }, i * 100);
+                    const rpt = document.querySelector('.receipt');
+                    if (rpt) preview.innerHTML += rpt.outerHTML;
+                }, i * 120);
             }
 
-            document.getElementById('receiptNo').value = baseReceiptNo;
             showNotification(`Generated ${count} receipts successfully!`);
         }
 
@@ -1557,7 +1596,7 @@ Goods once sold are not returnable</textarea>
             document.getElementById('shopPhone').value = '';
             document.getElementById('shopTIN').value = '';
             document.getElementById('shopEmail').value = '';
-            document.getElementById('receiptNo').value = 'REC-00001';
+            document.getElementById('receiptNo').value = generateReceiptNumber();
             document.getElementById('servedBy').value = '';
             document.getElementById('tableNumber').value = '';
             document.getElementById('roomNumber').value = '';
@@ -1581,6 +1620,11 @@ Goods once sold are not returnable</textarea>
             setTimeout(() => {
                 notification.classList.remove('show');
             }, 3000);
+        }
+
+        // Ensure there's a unique receipt number on first load (unless user already set one)
+        if (!document.getElementById('receiptNo').value || document.getElementById('receiptNo').value === 'REC-00001') {
+            document.getElementById('receiptNo').value = generateReceiptNumber();
         }
 
         generateReceipt();
