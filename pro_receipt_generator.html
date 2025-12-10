@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pro Receipt Generator - 12 Unique Templates</title>
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .main-header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .main-header h1 {
+            font-size: 42px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .main-header .subtitle {
+            font-size: 18px;
+            opacity: 0.95;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 420px 1fr;
+            gap: 30px;
+        }
+
+        .form-section {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+            height: fit-content;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .form-section::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .form-section::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .form-section::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 4px;
+        }
+
+        .preview-section {
+            background: rgba(255,255,255,0.95);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-y: auto;
+            max-height: 90vh;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #555;
+            font-size: 13px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 60px;
+        }
+
+        .template-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .template-card {
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: white;
+            min-height: 90px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .template-card:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+        }
+
+        .template-card.active {
+            border-color: #667eea;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: bold;
+        }
+
+        .template-icon {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .template-name {
+            font-weight: 600;
+            margin-bottom: 3px;
+            font-size: 12px;
+        }
+
+        .template-desc {
+            font-size: 10px;
+            opacity: 0.8;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            transition: transform 0.2s;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #4CAF50 0%, #388E3C 100%);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
+            padding: 8px 16px;
+            font-size: 13px;
+            width: auto;
+        }
+
+        .item-entry {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .item-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .section-header {
+            background: #f0f4ff;
+            padding: 10px 15px;
+            margin: 20px -25px 15px -25px;
+            font-weight: 600;
+            color: #667eea;
+            font-size: 14px;
+        }
+
+        /* Receipt Base Styles */
+        .receipt {
+            background: white;
+            padding: 5mm;
+            font-family: 'Courier New', monospace;
+            line-height: 1.3;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            margin: 20px auto;
+            position: relative;
+        }
+
+        /* Template 1: Classic Thermal (80mm) */
+        .template-1 {
+            width: 80mm;
+            font-size: 10pt;
+        }
+        .template-1 .receipt-header {
+            text-align: center;
+            border-bottom: 2px dashed #000;
+            padding-bottom: 5mm;
+            margin-bottom: 5mm;
+        }
+        .template-1 .shop-name {
+            font-size: 16pt;
+            font-weight: bold;
+        }
+        .template-1 .receipt-footer {
+            text-align: center;
+            border-top: 2px dashed #000;
+            padding-top: 5mm;
+            margin-top: 5mm;
+        }
+
+        /* Template 2: Colored Header (80mm) */
+        .template-2 {
+            width: 80mm;
+            font-size: 10pt;
+        }
+        .template-2 .receipt-header {
+            text-align: center;
+            background: #667eea;
+            color: white;
+            padding: 5mm;
+            margin: -5mm -5mm 5mm -5mm;
+        }
+        .template-2 .shop-name {
+            font-size: 16pt;
+            font-weight: bold;
+        }
+        .template-2 .receipt-footer {
+            text-align: center;
+            background: #667eea;
+            color: white;
+            padding: 5mm;
+            margin: 5mm -5mm -5mm -5mm;
+        }
+
+        /* Template 3: Wide Format (110mm) */
+        .template-3 {
+            width: 110mm;
+            font-size: 11pt;
+        }
+        .template-3 .receipt-header {
+            text-align: center;
+            border: 3px double #000;
+            padding: 5mm;
+            margin-bottom: 5mm;
+        }
+        .template-3 .shop-name {
+            font-size: 18pt;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+        .template-3 .receipt-footer {
+            text-align: center;
+            border: 3px double #000;
+            padding: 5mm;
+            margin-top: 5mm;
+        }
+
+        /* Template 4: Gradient Background (80mm) */
+        .template-4 {
+            width: 80mm;
+            font-size: 10pt;
+            background: linear-gradient(180deg, #f0f4ff 0%, #ffffff 30%);
+        }
+        .template-4 .receipt-header {
+            text-align: center;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 5mm;
+            margin-bottom: 5mm;
+        }
+        .template-4 .shop-name {
+            font-size: 16pt;
+            font-weight: bold;
+            color: #667eea;
+        }
+        .template-4 .receipt-footer {
+            text-align: center;
+            border-top: 2px solid #667eea;
+            padding-top: 5mm;
+            margin-top: 5mm;
+            color: #667eea;
+        }
+
+        /* Template 5: Compact Mini (58mm) */
+        .template-5 {
+            width: 58mm;
+            font-size: 8pt;
+        }
+        .template-5 .receipt-header {
+            text-align: center;
+            border-bottom: 1px dashed #000;
+            padding-bottom: 3mm;
+            margin-bottom: 3mm;
+        }
+        .template-5 .shop-name {
+            font-size: 12pt;
+            font-weight: bold;
+        }
+        .template-5 .receipt-footer {
+            text-align: center;
+            border-top: 1px dashed #000;
+            padding-top: 3mm;
+            margin-top: 3mm;
+            font-size: 7pt;
+        }
+
+        /* Template 6: Dark Theme (80mm) */
+        .template-6 {
+            width: 80mm;
+            font-size: 10pt;
+            background: #2c3e50;
+            color: #ecf0f1;
+        }
+        .template-6 .receipt-header {
+            text-align: center;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 5mm;
+            margin-bottom: 5mm;
+        }
+        .template-6 .shop-name {
+            font-size: 16pt;
+            font-weight: bold;
+            color: #3498db;
+        }
+        .template-6 .receipt-footer {
+            text-align: center;
+            border-top: 2px solid #ecf0f1;
+            padding-top: 5mm;
+            margin-top: 5mm;
+        }
+        .template-6 .items-table th,
+        .template-6 .items-table td {
+            border-color: #7f8c8d !important;
+        }
+
+        /* Template 7: Premium Box (90mm) */
+        .template-7 {
+            width: 90mm;
+            font-size: 10pt;
+            border: 4px solid #000;
+            padding: 8mm;
+        }
+        .template-7 .receipt-header {
+            text-align: center;
+            border: 2px solid #000;
+            padding: 5mm;
+            margin-bottom: 5mm;
+            background: #f9f9f9;
+        }
+        .template-7 .shop-name {
+            font-size: 17pt;
+            font-weight: bold;
+        }
+        .template-7 .receipt-footer {
+            text-align: center;
+            border: 2px solid #000;
+            padding: 5mm;
+            margin-top: 5mm;
+            background: #f9f9f9;
+        }
+
+        /* Template 8: Warm Beige (80mm) */
+        .template-8 {
+            width: 80mm;
+            font-size: 10pt;
+            background: #f5e6d3;
+        }
+        .template-8 .receipt-header {
+            text-align: center;
+            background: #d4a574;
+            color: #4a3822;
+            padding: 5mm;
+            margin: -5mm -5mm 5mm -5mm;
+            border-radius: 0;
+        }
+        .template-8 .shop-name {
+            font-size: 16pt;
+            font-weight: bold;
+        }
+        .template-8 .receipt-footer {
+            text-align: center;
+            background: #d4a574;
+            color: #4a3822;
+            padding: 5mm;
+            margin: 5mm -5mm -5mm -5mm;
+        }
+
+        /* Template 9: Modern Split (80mm) */
+        .template-9 {
+            width: 80mm;
+            font-size: 10pt;
+            border-left: 5px solid #e74c3c;
+        }
+        .template-9 .receipt-header {
+            text-align: center;
+            padding-bottom: 5mm;
+            margin-bottom: 5mm;
+            border-bottom: 2px solid #e74c3c;
+        }
+        .template-9 .shop-name {
+            font-size: 16pt;
+            font-weight: bold;
+            color: #e74c3c;
+        }
+        .template-9 .receipt-footer {
+            text-align: center;
+            padding-top: 5mm;
+            margin-top: 5mm;
+            border-top: 2px solid #e74c3c;
+        }
+
+        /* Template 10: Green Eco (80mm) */
+        .template-10 {
+            width: 80mm;
+            font-size: 10pt;
+            background: #e8f5e9;
+        }
+        .template-10 .receipt-header {
+            text-align: center;
+            background: #4caf50;
+            color: white;
+            padding: 5mm;
+            margin: -5mm -5mm 5mm -5mm;
+        }
+        .template-10 .shop-name {
+            font-size: 16pt;
+            font-weight: bold;
+        }
+        .template-10 .receipt-footer {
+            text-align: center;
+            background: #4caf50;
+            color: white;
+            padding: 5mm;
+            margin: 5mm -5mm -5mm -5mm;
+        }
+
+        /* Template 11: Extra Wide (140mm) */
+        .template-11 {
+            width: 140mm;
+            font-size: 12pt;
+            font-family: 'Georgia', serif;
+        }
+        .template-11 .receipt-header {
+            text-align: center;
+            border-top: 3px solid #000;
+            border-bottom: 3px solid #000;
+            padding: 8mm 0;
+            margin-bottom: 5mm;
+        }
+        .template-11 .shop-name {
+            font-size: 22pt;
+            font-weight: bold;
+            letter-spacing: 3px;
+        }
+        .template-11 .receipt-footer {
+            text-align: center;
+            border-top: 3px solid #000;
+            border-bottom: 3px solid #000;
+            padding: 8mm 0;
+            margin-top: 5mm;
+        }
+
+        /* Template 12: Minimalist Dots (80mm) */
+        .template-12 {
+            width: 80mm;
+            font-size: 10pt;
+            background: white;
+        }
+        .template-12 .receipt-header {
+            text-align: center;
+            border-bottom: 3px dotted #9c27b0;
+            padding-bottom: 5mm;
+            margin-bottom: 5mm;
+        }
+        .template-12 .shop-name {
+            font-size: 16pt;
+            font-weight: bold;
+            color: #9c27b0;
+        }
+        .template-12 .receipt-footer {
+            text-align: center;
+            border-top: 3px dotted #9c27b0;
+            padding-top: 5mm;
+            margin-top: 5mm;
+            color: #9c27b0;
+        }
+
+        /* Common Styles */
+        .receipt-info {
+            font-size: 9pt;
+            margin-bottom: 1mm;
+        }
+
+        .receipt-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 9pt;
+            margin: 2mm 0;
+        }
+
+        .items-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 5mm 0;
+            font-size: 9pt;
+        }
+
+        .items-table th {
+            text-align: left;
+            border-bottom: 1px solid #000;
+            padding: 2mm 0;
+            font-weight: bold;
+        }
+
+        .items-table td {
+            padding: 1.5mm 0;
+            border-bottom: 1px dashed #ccc;
+        }
+
+        .template-6 .items-table td {
+            border-bottom: 1px dashed #7f8c8d;
+        }
+
+        .items-table .text-right {
+            text-align: right;
+        }
+
+        .items-table .text-center {
+            text-align: center;
+        }
+
+        .total-row {
+            font-weight: bold;
+            font-size: 11pt;
+            border-top: 2px solid #000 !important;
+            border-bottom: 2px solid #000 !important;
+        }
+
+        .qr-code, .barcode {
+            margin: 3mm auto;
+            text-align: center;
+        }
+
+        .qr-code canvas, .barcode svg {
+            display: block;
+            margin: 0 auto;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .main-header, .form-section {
+                display: none;
+            }
+            .container {
+                display: block;
+            }
+            .preview-section {
+                background: white;
+                box-shadow: none;
+                padding: 0;
+            }
+            .receipt {
+                box-shadow: none;
+                margin: 0;
+                page-break-after: always;
+            }
+            .no-print {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-header">
+        <h1>🎨 Pro Receipt Generator</h1>
+        <p class="subtitle">12 Unique Templates • Fully Customizable • QR & Barcode Support</p>
+    </div>
+
+    <div class="container">
+        <!-- Form Section -->
+        <div class="form-section">
+            <h2>📋 Design Your Receipt</h2>
+
+            <!-- Template Selection -->
+            <div class="section-header">Choose Template (12 Styles)</div>
+            <div class="template-grid">
+                <div class="template-card active" onclick="selectTemplate(1)">
+                    <div class="template-icon">🎫</div>
+                    <div class="template-name">Classic</div>
+                    <div class="template-desc">80mm • Dashed</div>
+                </div>
+                <div class="template-card" onclick="selectTemplate(2)">
+                    <div class="template-icon">🎨</div>
+                    <div class="template-name">Colored</div>
+                    <div class="template-desc">80mm • Blue BG</div>
+                </div>
+                <div class="template-card" onclick="selectTemplate(3)">
+                    <div class="template-icon">📏</div>
+                    <div class="template-name">Wide</div>
+                    <div class="template-desc">110mm • Double</div>
+                </div>
+                <div class="template-card" onclick="selectTemplate(4)">
+                    <div class="template-icon">🌈</div>
+                    <div class="template-name">Gradient</div>
+                    <div class="template-desc">80mm • Blue Fade</div>
+                </div>
+                <div class="template-card" onclick="selectTemplate(5)">
+                    <div class="template-icon">📱</div>
+                    <div class="template-name">Mini</div>
+                    <div class="template-desc">58mm • Compact</div>
+                </div>
+                <div class="template-card" onclick="selectTemplate(6)">
+                    <div class="template-icon">🌙</div>
+                    <div class="template-name">Dark</div>
+                    <div class="template-desc">80mm • Night Mode</div>
+                </div>
+                <div class="template-card" onclick="selectTemplate(7)">
+                    <div class="template-icon">💎</div>
+                    <div class="template-name">Premium</div>
+                    <div class="template-desc">90mm • Boxed</div>
+                </div>
+                <div class="template-card" onclick="selectTemplate(8)">
+                    <div class="template-icon">🍂</div>
+                    <div class="template-name">Warm</div>
+                    <div class="template-desc">80mm • Beige</div>
+                </div>
+                <div class="template-card" onclick="selectTemplate(9)">
+                    <div class="template-icon">🔴</div>
+                    <div class="template-name">Split</div>
+                    <div class="template-desc">80mm • Red Accent</div>
+                </div>
+                <div class="template-card" onclick="selectTemplate(10)">
+                    <div class="template-icon">🌱</div>
+                    <div class="template-name">Eco</div>
+                    <div class="template-desc">80mm • Green</div>
+                </div>
+                <div class="template-card" onclick="selectTemplate(11)">
+                    <div class="template-icon">📜</div>
+                    <div class="template-name">Extra Wide</div>
+                    <div class="template-desc">140mm • Serif</div>
+                </div>
+                <div class="template-card" onclick="selectTemplate(12)">
+                    <div class="template-icon">⚫</div>
+                    <div class="template-name">Dots</div>
+                    <div class="template-desc">80mm • Purple</div>
+                </div>
+            </div>
+
+            <!-- Shop Details -->
+            <div class="section-header">Shop Details</div>
+            <div class="form-group">
+                <label>Shop Name:</label>
+                <input type="text" id="shopName" placeholder="e.g., Cosmo Coffee Shop" value="Cosmo Coffee Shop">
+            </div>
+
+            <div class="form-group">
+                <label>Shop Tagline (optional):</label>
+                <input type="text" id="shopTagline" placeholder="e.g., & Restaurant" value="& Restaurant">
+            </div>
+
+            <div class="form-group">
+                <label>Address:</label>
+                <textarea id="shopAddress" placeholder="Street, City, Region">Tororo Town, Eastern Uganda</textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Phone Number:</label>
+                <input type="text" id="shopPhone" placeholder="+256-XXX-XXXXXX" value="+256-XXX-XXXXXX">
+            </div>
+
+            <div class="form-group">
+                <label>TIN/Registration No (optional):</label>
+                <input type="text" id="shopTIN" placeholder="TIN: 1000XXXXXX">
+            </div>
+
+            <div class="form-group">
+                <label>Email (optional):</label>
+                <input type="email" id="shopEmail" placeholder="info@shop.com">
+            </div>
+
+            <!-- Receipt Details -->
+            <div class="section-header">Receipt Information</div>
+            <div class="form-group">
+                <label>Receipt Number:</label>
+                <input type="text" id="receiptNo" value="REC-00001" placeholder="REC-00001">
+            </div>
+
+            <div class="form-group">
+                <label>Date:</label>
+                <input type="date" id="receiptDate">
+            </div>
+
+            <div class="form-group">
+                <label>Time:</label>
+                <input type="time" id="receiptTime" value="13:30">
+            </div>
+
+            <div class="form-group">
+                <label>Served By:</label>
+                <input type="text" id="servedBy" placeholder="Server/Cashier name" value="Jane Doe">
+            </div>
+
+            <!-- Barcode/QR Options -->
+            <div class="section-header">Barcode & QR Code</div>
+            <div class="form-group">
+                <label>Include Barcode:</label>
+                <select id="includeBarcode">
+                    <option value="no">No</option>
+                    <option value="yes">Yes</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Include QR Code:</label>
+                <select id="includeQR">
+                    <option value="no">No</option>
+                    <option value="yes">Yes</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>QR Code Data (URL or text):</label>
+                <input type="text" id="qrData" placeholder="https://yourwebsite.com or any text">
+            </div>
+
+            <!-- Items -->
+            <div class="section-header">Items</div>
+            <div id="itemsContainer">
+                <div class="item-entry">
+                    <div class="item-row">
+                        <div>
+                            <label>Item Name:</label>
+                            <input type="text" class="item-name" placeholder="Item name" value="Main Course">
+                        </div>
+                        <div>
+                            <label>Qty:</label>
+                            <input type="number" class="item-qty" value="1" min="1">
+                        </div>
+                        <div>
+                            <label>Price:</label>
+                            <input type="number" class="item-price" value="15000" min="0">
+                        </div>
+                        <div>
+                            <label>Amount:</label>
+                            <input type="number" class="item-amount" value="15000" readonly style="background: #e9e9e9;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="addItem()" class="btn-success">+ Add Item</button>
+
+            <div class="form-group" style="margin-top: 20px;">
+                <label>Total Amount:</label>
+                <input type="number" id="totalAmount" value="25000" readonly style="background: #e9e9e9; font-weight: bold; font-size: 16px;">
+            </div>
+
+            <!-- Footer Message -->
+            <div class="section-header">Footer Message</div>
+            <div class="form-group">
+                <label>Thank You Message:</label>
+                <textarea id="footerMessage" placeholder="Thank you message">Thank You For Your Visit!
+Please Come Again</textarea>
+            </div>
+
+            <button onclick="generateReceipt()" class="btn-secondary">🎨 Generate Receipt</button>
+            <button onclick="window.print()">🖨️ Print Receipt</button>
+        </div>
+
+        <!-- Preview Section -->
+        <div class="preview-section">
+            <h2 class="no-print">Receipt Preview</h2>
+            <div id="receiptPreview"></div>
+        </div>
+    </div>
+
+    <script>
+        let currentTemplate = 1;
+
+        // Set today's date as default
+        document.getElementById('receiptDate').valueAsDate = new Date();
+
+        function selectTemplate(templateNum) {
+            currentTemplate = templateNum;
+            document.querySelectorAll('.template-card').forEach((el, idx) => {
+                el.classList.toggle('active', idx + 1 === templateNum);
+            });
+            generateReceipt();
+        }
+
+        function calculateItemAmount(itemEntry) {
+            const qty = parseFloat(itemEntry.querySelector('.item-qty').value) || 0;
+            const price = parseFloat(itemEntry.querySelector('.item-price').value) || 0;
+            const amount = qty * price;
+            itemEntry.querySelector('.item-amount').value = amount;
+            calculateTotal();
+        }
+
+        function calculateTotal() {
+            const items = document.querySelectorAll('.item-entry');
+            let total = 0;
+            items.forEach(item => {
+                const amount = parseFloat(item.querySelector('.item-amount').value) || 0;
+                total += amount;
+            });
+            document.getElementById('totalAmount').value = total;
+        }
+
+        function addItem() {
+            const container = document.getElementById('itemsContainer');
+            const itemEntry = document.createElement('div');
+            itemEntry.className = 'item-entry';
+            itemEntry.innerHTML = `
+                <div class="item-row">
+                    <div>
+                        <label>Item Name:</label>
+                        <input type="text" class="item-name" placeholder="Item name">
+                    </div>
+                    <div>
+                        <label>Qty:</label>
+                        <input type="number" class="item-qty" value="1" min="1">
+                    </div>
+                    <div>
+                        <label>Price:</label>
+                        <input type="number" class="item-price" value="0" min="0">
+                    </div>
+                    <div>
+                        <label>Amount:</label>
+                        <input type="number" class="item-amount" value="0" readonly style="background: #e9e9e9;">
+                    </div>
+                </div>
+                <button class="btn-danger" onclick="this.parentElement.remove(); calculateTotal();">Remove Item</button>
+            `;
+            container.appendChild(itemEntry);
+
+            itemEntry.querySelector('.item-qty').addEventListener('input', () => calculateItemAmount(itemEntry));
+            itemEntry.querySelector('.item-price').addEventListener('input', () => calculateItemAmount(itemEntry));
+        }
+
+        document.querySelectorAll('.item-entry').forEach(item => {
+            item.querySelector('.item-qty').addEventListener('input', () => calculateItemAmount(item));
+            item.querySelector('.item-price').addEventListener('input', () => calculateItemAmount(item));
+        });
+
+        async function generateReceipt() {
+            const shopName = document.getElementById('shopName').value;
+            const shopTagline = document.getElementById('shopTagline').value;
+            const shopAddress = document.getElementById('shopAddress').value;
+            const shopPhone = document.getElementById('shopPhone').value;
+            const shopTIN = document.getElementById('shopTIN').value;
+            const shopEmail = document.getElementById('shopEmail').value;
+            const receiptNo = document.getElementById('receiptNo').value;
+            const date = new Date(document.getElementById('receiptDate').value).toLocaleDateString('en-GB');
+            const time = document.getElementById('receiptTime').value;
+            const servedBy = document.getElementById('servedBy').value;
+            const includeBarcode = document.getElementById('includeBarcode').value === 'yes';
+            const includeQR = document.getElementById('includeQR').value === 'yes';
+            const qrData = document.getElementById('qrData').value || receiptNo;
+            const total = parseFloat(document.getElementById('totalAmount').value) || 0;
+            const footerMessage = document.getElementById('footerMessage').value;
+
+            const items = [];
+            document.querySelectorAll('.item-entry').forEach(entry => {
+                const name = entry.querySelector('.item-name').value;
+                const qty = entry.querySelector('.item-qty').value;
+                const price = parseFloat(entry.querySelector('.item-price').value);
+                const amount = parseFloat(entry.querySelector('.item-amount').value);
+                if (name && qty && price) {
+                    items.push({ name, qty, price, amount });
+                }
+            });
+
+            let itemsHTML = '';
+            items.forEach(item => {
+                itemsHTML += `
+                    <tr>
+                        <td>${item.name}</td>
+                        <td class="text-center">${item.qty}</td>
+                        <td class="text-right">${item.price.toLocaleString()}</td>
+                        <td class="text-right">${item.amount.toLocaleString()}</td>
+                    </tr>
+                `;
+            });
+
+            let shopInfoHTML = `<div class="shop-name">${shopName}</div>`;
+            if (shopTagline) shopInfoHTML += `<div class="receipt-info">${shopTagline}</div>`;
+            if (shopAddress) {
+                const addressLines = shopAddress.split('\n');
+                addressLines.forEach(line => {
+                    shopInfoHTML += `<div class="receipt-info">${line}</div>`;
+                });
+            }
+            if (shopPhone) shopInfoHTML += `<div class="receipt-info">Tel: ${shopPhone}</div>`;
+            if (shopTIN) shopInfoHTML += `<div class="receipt-info">${shopTIN}</div>`;
+            if (shopEmail) shopInfoHTML += `<div class="receipt-info">${shopEmail}</div>`;
+
+            let barcodeHTML = '';
+            if (includeBarcode) {
+                barcodeHTML = `
+                    <div class="barcode">
+                        <svg id="barcode"></svg>
+                    </div>
+                `;
+            }
+
+            let qrHTML = '';
+            if (includeQR) {
+                qrHTML = `
+                    <div class="qr-code">
+                        <canvas id="qrcode"></canvas>
+                    </div>
+                `;
+            }
+
+            const footerLines = footerMessage.split('\n');
+            let footerHTML = '';
+            footerLines.forEach((line, idx) => {
+                const size = idx === 0 ? '10pt' : '9pt';
+                const weight = idx === 0 ? 'bold' : 'normal';
+                footerHTML += `<div style="font-size: ${size}; font-weight: ${weight}; margin-bottom: 1mm;">${line}</div>`;
+            });
+
+            const receiptHTML = `
+                <div class="receipt template-${currentTemplate}">
+                    <div class="receipt-header">
+                        ${shopInfoHTML}
+                    </div>
+
+                    ${qrHTML}
+
+                    <div class="receipt-meta">
+                        <div>Receipt: ${receiptNo}</div>
+                        <div>${date}</div>
+                    </div>
+                    <div class="receipt-meta">
+                        <div>Served By: ${servedBy}</div>
+                        <div>${time}</div>
+                    </div>
+
+                    <table class="items-table">
+                        <thead>
+                            <tr>
+                                <th>ITEM</th>
+                                <th class="text-center">QTY</th>
+                                <th class="text-right">PRICE</th>
+                                <th class="text-right">AMT</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${itemsHTML}
+                            <tr class="total-row">
+                                <td colspan="3">TOTAL</td>
+                                <td class="text-right">UGX ${total.toLocaleString()}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div style="text-align: center; font-weight: bold; margin: 3mm 0; font-size: 10pt;">
+                        PAYMENT: CASH
+                    </div>
+
+                    ${barcodeHTML}
+
+                    <div class="receipt-footer">
+                        ${footerHTML}
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('receiptPreview').innerHTML = receiptHTML;
+
+            // Generate barcode if enabled
+            if (includeBarcode) {
+                setTimeout(() => {
+                    JsBarcode("#barcode", receiptNo, {
+                        format: "CODE128",
+                        width: 1.5,
+                        height: 40,
+                        displayValue: true,
+                        fontSize: 12
+                    });
+                }, 100);
+            }
+
+            // Generate QR code if enabled
+            if (includeQR) {
+                setTimeout(() => {
+                    QRCode.toCanvas(document.getElementById('qrcode'), qrData, {
+                        width: 100,
+                        margin: 1
+                    });
+                }, 100);
+            }
+        }
+
+        // Generate initial receipt
+        generateReceipt();
+
+        // Auto-regenerate on any input change
+        document.querySelectorAll('input, select, textarea').forEach(el => {
+            el.addEventListener('input', generateReceipt);
+        });
+    </script>
+</body>
+</html>

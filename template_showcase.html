@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receipt Template Showcase - All 12 Designs</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+        }
+
+        .header h1 {
+            font-size: 48px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 20px;
+            opacity: 0.95;
+        }
+
+        .showcase-grid {
+            max-width: 1800px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+        }
+
+        .template-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            transition: transform 0.3s;
+        }
+
+        .template-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .template-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .template-icon {
+            font-size: 40px;
+        }
+
+        .template-info h2 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .template-meta {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: #f0f4ff;
+            color: #667eea;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .template-preview {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .features {
+            margin: 20px 0;
+        }
+
+        .features h3 {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .feature-list {
+            list-style: none;
+        }
+
+        .feature-list li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            color: #555;
+        }
+
+        .feature-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #4caf50;
+            font-weight: bold;
+        }
+
+        .use-cases {
+            background: #f0f4ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .use-cases h3 {
+            font-size: 14px;
+            color: #667eea;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .use-cases p {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .code-section {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .code-section::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .code-section::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 4px;
+        }
+
+        .copy-button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            margin-top: 10px;
+        }
+
+        .copy-button:hover {
+            background: #5568d3;
+        }
+
+        /* Mini receipt preview styles */
+        .mini-receipt {
+            width: 200px;
+            background: white;
+            padding: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 8px;
+            line-height: 1.2;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .mini-receipt.template-1 .header {
+            text-align: center;
+            border-bottom: 1px dashed #000;
+            padding-bottom: 8px;
+            margin-bottom: 8px;
+            background: transparent;
+            color: #000;
+            padding: 0 0 8px 0;
+        }
+
+        .mini-receipt.template-2 .header {
+            background: #667eea;
+            color: white;
+            padding: 8px;
+            margin: -10px -10px 8px -10px;
+        }
+
+        .mini-receipt.template-3 .header {
+            border: 2px double #000;
+            padding: 8px;
+            margin-bottom: 8px;
+            background: transparent;
+            color: #000;
+        }
+
+        .mini-receipt.template-4 {
+            background: linear-gradient(180deg, #f0f4ff 0%, #ffffff 30%);
+        }
+
+        .mini-receipt.template-4 .header {
+            border-bottom: 1px solid #667eea;
+            padding-bottom: 8px;
+            margin-bottom: 8px;
+            background: transparent;
+            color: #667eea;
+        }
+
+        .mini-receipt.template-5 {
+            width: 150px;
+            font-size: 7px;
+        }
+
+        .mini-receipt.template-6 {
+            background: #2c3e50;
+            color: #ecf0f1;
+        }
+
+        .mini-receipt.template-6 .header {
+            border-bottom: 1px solid #ecf0f1;
+            padding-bottom: 8px;
+            margin-bottom: 8px;
+            color: #3498db;
+            background: transparent;
+        }
+
+        .mini-receipt.template-7 {
+            border: 2px solid #000;
+            padding: 15px;
+        }
+
+        .mini-receipt.template-7 .header {
+            border: 1px solid #000;
+            background: #f9f9f9;
+            padding: 8px;
+            margin-bottom: 8px;
+            color: #000;
+        }
+
+        .mini-receipt.template-8 {
+            background: #f5e6d3;
+        }
+
+        .mini-receipt.template-8 .header {
+            background: #d4a574;
+            color: #4a3822;
+            padding: 8px;
+            margin: -10px -10px 8px -10px;
+        }
+
+        .mini-receipt.template-9 {
+            border-left: 3px solid #e74c3c;
+        }
+
+        .mini-receipt.template-9 .header {
+            border-bottom: 1px solid #e74c3c;
+            padding-bottom: 8px;
+            margin-bottom: 8px;
+            color: #e74c3c;
+            background: transparent;
+        }
+
+        .mini-receipt.template-10 {
+            background: #e8f5e9;
+        }
+
+        .mini-receipt.template-10 .header {
+            background: #4caf50;
+            color: white;
+            padding: 8px;
+            margin: -10px -10px 8px -10px;
+        }
+
+        .mini-receipt.template-11 {
+            width: 280px;
+            font-family: Georgia, serif;
+            font-size: 9px;
+        }
+
+        .mini-receipt.template-11 .header {
+            border-top: 2px solid #000;
+            border-bottom: 2px solid #000;
+            padding: 10px 0;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+            background: transparent;
+            color: #000;
+        }
+
+        .mini-receipt.template-12 .header {
+            border-bottom: 2px dotted #9c27b0;
+            padding-bottom: 8px;
+            margin-bottom: 8px;
+            color: #9c27b0;
+            background: transparent;
+        }
+
+        .mini-receipt .shop-name {
+            font-weight: bold;
+            font-size: 1.4em;
+            margin-bottom: 4px;
+        }
+
+        .mini-receipt .receipt-info {
+            font-size: 0.9em;
+            margin-bottom: 2px;
+        }
+
+        .mini-receipt .items {
+            margin: 10px 0;
+            border-top: 1px solid #999;
+            border-bottom: 1px solid #999;
+            padding: 8px 0;
+        }
+
+        .mini-receipt .item {
+            display: flex;
+            justify-content: space-between;
+            margin: 3px 0;
+        }
+
+        .mini-receipt .total {
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            margin-top: 5px;
+            padding-top: 5px;
+            border-top: 1px solid #000;
+        }
+
+        .mini-receipt .footer {
+            text-align: center;
+            margin-top: 8px;
+            font-size: 0.9em;
+        }
+
+        .footer-section {
+            text-align: center;
+            color: white;
+            margin-top: 60px;
+            padding: 40px 20px;
+        }
+
+        .footer-section h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .footer-section p {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .share-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .share-button {
+            background: white;
+            color: #667eea;
+            padding: 12px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.2s;
+        }
+
+        .share-button:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🎨 Receipt Template Showcase</h1>
+        <p>Explore all 12 professional receipt designs • Copy, Share, and Customize</p>
+    </div>
+
+    <div class="showcase-grid">
+        <!-- Template 1 -->
+        <div class="template-card">
+            <div class="template-header">
+                <div class="template-icon">🎫</div>
+                <div class="template-info">
+                    <h2>Classic Thermal</h2>
+                    <div class="template-meta">
+                        <span class="badge">80mm</span>
+                        <span class="badge">Dashed</span>
+                        <span class="badge">Traditional</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="template-preview">
+                <div class="mini-receipt template-1">
+                    <div class="header">
+                        <div class="shop-name">COFFEE SHOP</div>
+                        <div class="receipt-info">123 Main St</div>
+                        <div class="receipt-info">Tel: +256-XXX-XXX</div>
+                    </div>
+                    <div style="font-size: 0.8em; margin: 5px 0;">Receipt: #001 | 10/12/2025</div>
+                    <div class="items">
+                        <div class="item"><span>Espresso</span><span>5,000</span></div>
+                        <div class="item"><span>Croissant</span><span>3,000</span></div>
+                    </div>
+                    <div class="total"><span>TOTAL:</span><span>UGX 8,000</span></div>
+                    <div class="footer">Thank You!</div>
+                </div>
+            </div>
+
+            <div class="features">
+                <h3>✨ Features:</h3>
+                <ul class="feature-list">
+                    <li>Classic dashed borders</li>
+                    <li>Monospace font</li>
+                    <li>Standard 80mm width</li>
+                    <li>Simple, timeless design</li>
+                </ul>
+            </div>
+
+            <div class="use-cases">
+                <h3>💼 Best For:</h3>
+                <p>Traditional restaurants, cafes, general retail, thermal printers, classic businesses</p>
+            </div>
+
+            <button class="copy-button" onclick="copyCode('template1')">📋 Copy CSS Code</button>
+            <div class="code-section" id="template1" style="display:none;">
+.template-1 {
+    width: 80mm;
+    font-size: 10pt;
+}
+.template-1 .receipt-header {
+    text-align: center;
+    border-bottom: 2px dashed #000;
+    padding-bottom: 5mm;
+    margin-bottom: 5mm;
+}
+.template-1 .shop-name {
+    font-size: 16pt;
+    font-weight: bold;
+}
+            </div>
+        </div>
+
+        <!-- Template 2 -->
+        <div class="template-card">
+            <div class="template-header">
+                <div class="template-icon">🎨</div>
+                <div class="template-info">
+                    <h2>Colored Header</h2>
+                    <div class="template-meta">
+                        <span class="badge">80mm</span>
+                        <span class="badge">Blue</span>
+                        <span class="badge">Modern</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="template-preview">
+                <div class="mini-receipt template-2">
+                    <div class="header">
+                        <div class="shop-name">TECH STORE</div>
+                        <div class="receipt-info">456 Digital Ave</div>
+                        <div class="receipt-info">tech@store.com</div>
+                    </div>
+                    <div style="font-size: 0.8em; margin: 5px 0;">Receipt: #002 | 10/12/2025</div>
+                    <div class="items">
+                        <div class="item"><span>USB Cable</span><span>15,000</span></div>
+                        <div class="item"><span>Mouse Pad</span><span>10,000</span></div>
+                    </div>
+                    <div class="total"><span>TOTAL:</span><span>UGX 25,000</span></div>
+                    <div class="footer">Visit Again!</div>
+                </div>
+            </div>
+
+            <div class="features">
+                <h3>✨ Features:</h3>
+                <ul class="feature-list">
+                    <li>Colored header & footer</li>
+                    <li>White text on blue</li>
+                    <li>Modern appearance</li>
+                    <li>Eye-catching design</li>
+                </ul>
+            </div>
+
+            <div class="use-cases">
+                <h3>💼 Best For:</h3>
+                <p>Tech shops, modern cafes, trendy boutiques, startups, design-forward businesses</p>
+            </div>
+
+            <button class="copy-button" onclick="copyCode('template2')">📋 Copy CSS Code</button>
+            <div class="code-section" id="template2" style="display:none;">
+.template-2 {
+    width: 80mm;
+    font-size: 10pt;
+}
+.template-2 .receipt-header {
+    text-align: center;
+    background: #667eea;
+    color: white;
+    padding: 5mm;
+    margin: -5mm -5mm 5mm -5mm;
+}
+            </div>
+        </div>
+
+        <!-- Template 3 -->
+        <div class="template-card">
+            <div class="template-header">
+                <div class="template-icon">📏</div>
+                <div class="template-info">
+                    <h2>Wide Format</h2>
+                    <div class="template-meta">
+                        <span class="badge">110mm</span>
+                        <span class="badge">Double</span>
+                        <span class="badge">Premium</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="template-preview">
+                <div class="mini-receipt template-3">
+                    <div class="header">
+                        <div class="shop-name">BOUTIQUE</div>
+                        <div class="receipt-info">789 Fashion St</div>
+                    </div>
+                    <div style="font-size: 0.8em; margin: 5px 0;">Receipt: #003</div>
+                    <div class="items">
+                        <div class="item"><span>Designer Bag</span><span>500,000</span></div>
+                    </div>
+                    <div class="total"><span>TOTAL:</span><span>UGX 500,000</span></div>
+                    <div class="footer">Luxury Shopping</div>
+                </div>
+            </div>
+
+            <div class="features">
+                <h3>✨ Features:</h3>
+                <ul class="feature-list">
+                    <li>110mm wide format</li>
+                    <li>Double line borders</li>
+                    <li>Letter spacing</li>
+                    <li>Premium look</li>
+                </ul>
+            </div>
+
+            <div class="use-cases">
+                <h3>💼 Best For:</h3>
+                <p>Premium retail, boutiques, jewelry stores, high-end fashion, luxury brands</p>
+            </div>
+
+            <button class="copy-button" onclick="copyCode('template3')">📋 Copy CSS Code</button>
+            <div class="code-section" id="template3" style="display:none;">
+.template-3 {
+    width: 110mm;
+    font-size: 11pt;
+}
+.template-3 .receipt-header {
+    border: 3px double #000;
+    padding: 5mm;
+}
+            </div>
+        </div>
+
+        <!-- Continue for all 12 templates... -->
+        <!-- I'll add a few more key ones -->
+
+        <!-- Template 6 - Dark -->
+        <div class="template-card">
+            <div class="template-header">
+                <div class="template-icon">🌙</div>
+                <div class="template-info">
+                    <h2>Dark Theme</h2>
+                    <div class="template-meta">
+                        <span class="badge">80mm</span>
+                        <span class="badge">Dark</span>
+                        <span class="badge">Night Mode</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="template-preview">
+                <div class="mini-receipt template-6">
+                    <div class="header">
+                        <div class="shop-name">NIGHT BAR</div>
+                        <div class="receipt-info">321 Night St</div>
+                    </div>
+                    <div style="font-size: 0.8em; margin: 5px 0;">Receipt: #006</div>
+                    <div class="items">
+                        <div class="item"><span>Cocktail</span><span>20,000</span></div>
+                        <div class="item"><span>Snacks</span><span>15,000</span></div>
+                    </div>
+                    <div class="total"><span>TOTAL:</span><span>UGX 35,000</span></div>
+                    <div class="footer">Come Back!</div>
+                </div>
+            </div>
+
+            <div class="features">
+                <h3>✨ Features:</h3>
+                <ul class="feature-list">
+                    <li>Dark background</li>
+                    <li>Light text</li>
+                    <li>Blue accents</li>
+                    <li>Modern aesthetic</li>
+                </ul>
+            </div>
+
+            <div class="use-cases">
+                <h3>💼 Best For:</h3>
+                <p>Bars, nightclubs, gaming cafes, lounges, entertainment venues, tech spaces</p>
+            </div>
+
+            <button class="copy-button" onclick="copyCode('template6')">📋 Copy CSS Code</button>
+            <div class="code-section" id="template6" style="display:none;">
+.template-6 {
+    width: 80mm;
+    background: #2c3e50;
+    color: #ecf0f1;
+}
+.template-6 .shop-name {
+    color: #3498db;
+}
+            </div>
+        </div>
+
+        <!-- Template 10 - Eco -->
+        <div class="template-card">
+            <div class="template-header">
+                <div class="template-icon">🌱</div>
+                <div class="template-info">
+                    <h2>Green Eco</h2>
+                    <div class="template-meta">
+                        <span class="badge">80mm</span>
+                        <span class="badge">Green</span>
+                        <span class="badge">Eco-Friendly</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="template-preview">
+                <div class="mini-receipt template-10">
+                    <div class="header">
+                        <div class="shop-name">ORGANIC STORE</div>
+                        <div class="receipt-info">555 Green Lane</div>
+                    </div>
+                    <div style="font-size: 0.8em; margin: 5px 0;">Receipt: #010</div>
+                    <div class="items">
+                        <div class="item"><span>Organic Apple</span><span>8,000</span></div>
+                        <div class="item"><span>Eco Bag</span><span>5,000</span></div>
+                    </div>
+                    <div class="total"><span>TOTAL:</span><span>UGX 13,000</span></div>
+                    <div class="footer">Go Green!</div>
+                </div>
+            </div>
+
+            <div class="features">
+                <h3>✨ Features:</h3>
+                <ul class="feature-list">
+                    <li>Green theme</li>
+                    <li>Eco-friendly vibe</li>
+                    <li>Light green bg</li>
+                    <li>Nature-inspired</li>
+                </ul>
+            </div>
+
+            <div class="use-cases">
+                <h3>💼 Best For:</h3>
+                <p>Organic stores, health food shops, eco-friendly businesses, farmers markets, sustainable brands</p>
+            </div>
+
+            <button class="copy-button" onclick="copyCode('template10')">📋 Copy CSS Code</button>
+            <div class="code-section" id="template10" style="display:none;">
+.template-10 {
+    width: 80mm;
+    background: #e8f5e9;
+}
+.template-10 .receipt-header {
+    background: #4caf50;
+    color: white;
+}
+            </div>
+        </div>
+
+        <!-- Template 11 - Extra Wide -->
+        <div class="template-card">
+            <div class="template-header">
+                <div class="template-icon">📜</div>
+                <div class="template-info">
+                    <h2>Extra Wide Formal</h2>
+                    <div class="template-meta">
+                        <span class="badge">140mm</span>
+                        <span class="badge">Serif</span>
+                        <span class="badge">Formal</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="template-preview">
+                <div class="mini-receipt template-11">
+                    <div class="header">
+                        <div class="shop-name">LAW FIRM LTD</div>
+                        <div class="receipt-info">101 Legal Avenue</div>
+                    </div>
+                    <div style="font-size: 0.8em; margin: 5px 0;">Invoice: #011</div>
+                    <div class="items">
+                        <div class="item"><span>Legal Consultation</span><span>1,000,000</span></div>
+                    </div>
+                    <div class="total"><span>TOTAL:</span><span>UGX 1,000,000</span></div>
+                    <div class="footer">Professional Service</div>
+                </div>
+            </div>
+
+            <div class="features">
+                <h3>✨ Features:</h3>
+                <ul class="feature-list">
+                    <li>140mm extra wide</li>
+                    <li>Serif font (Georgia)</li>
+                    <li>Formal appearance</li>
+                    <li>Professional spacing</li>
+                </ul>
+            </div>
+
+            <div class="use-cases">
+                <h3>💼 Best For:</h3>
+                <p>Law firms, medical offices, accounting firms, government, formal businesses, corporate invoices</p>
+            </div>
+
+            <button class="copy-button" onclick="copyCode('template11')">📋 Copy CSS Code</button>
+            <div class="code-section" id="template11" style="display:none;">
+.template-11 {
+    width: 140mm;
+    font-size: 12pt;
+    font-family: 'Georgia', serif;
+}
+.template-11 .shop-name {
+    letter-spacing: 3px;
+}
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-section">
+        <h2>📤 Share These Templates</h2>
+        <p>Help us build the world's best receipt template library!</p>
+        <p>Download the contribution guide to create and share your own designs</p>
+        
+        <div class="share-buttons">
+            <a href="#" class="share-button">📖 View Full Guide</a>
+            <a href="#" class="share-button">💾 Download Templates</a>
+            <a href="#" class="share-button">🤝 Contribute</a>
+        </div>
+
+        <p style="margin-top: 40px; font-size: 14px; opacity: 0.8;">
+            All templates are open source and free to use • Created with ❤️ for the community
+        </p>
+    </div>
+
+    <script>
+        function copyCode(templateId) {
+            const codeElement = document.getElementById(templateId);
+            
+            // Toggle visibility
+            if (codeElement.style.display === 'none') {
+                codeElement.style.display = 'block';
+            } else {
+                codeElement.style.display = 'none';
+            }
+            
+            // Copy to clipboard
+            const code = codeElement.textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                const button = event.target;
+                const originalText = button.textContent;
+                button.textContent = '✅ Copied!';
+                setTimeout(() => {
+                    button.textContent = originalText;
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>

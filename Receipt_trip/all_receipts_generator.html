@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4-Day Field Visit - Receipt Generator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f0f0;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            background: white;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .controls {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .controls button {
+            background: #4CAF50;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 0 10px;
+        }
+
+        .controls button:hover {
+            background: #45a049;
+        }
+
+        .receipts-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(90mm, 1fr));
+            gap: 20px;
+        }
+
+        /* Actual thermal receipt size - 80mm width */
+        .receipt {
+            width: 80mm;
+            background: white;
+            padding: 5mm;
+            font-family: 'Courier New', monospace;
+            font-size: 10pt;
+            line-height: 1.3;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            margin: 0 auto;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .header, .controls {
+                display: none;
+            }
+            .receipts-container {
+                display: block;
+            }
+            .receipt {
+                width: 80mm;
+                box-shadow: none;
+                margin: 0;
+                page-break-after: always;
+            }
+        }
+
+        /* Cosmo Receipt Styles */
+        .cosmo .receipt-header {
+            text-align: center;
+            border-bottom: 2px dashed #000;
+            padding-bottom: 5mm;
+            margin-bottom: 5mm;
+        }
+
+        .cosmo .receipt-title {
+            font-size: 15pt;
+            font-weight: bold;
+            margin-bottom: 2mm;
+        }
+
+        .cosmo .receipt-subtitle {
+            font-size: 10pt;
+            margin-bottom: 1mm;
+        }
+
+        .cosmo .receipt-info {
+            font-size: 9pt;
+            margin-bottom: 1mm;
+        }
+
+        /* Tororo Receipt Styles */
+        .tororo .receipt-header {
+            text-align: center;
+            border-bottom: 2px solid #000;
+            padding-bottom: 4mm;
+            margin-bottom: 4mm;
+        }
+
+        .tororo .receipt-title {
+            font-size: 13pt;
+            font-weight: bold;
+            margin-bottom: 1mm;
+        }
+
+        .tororo .receipt-subtitle {
+            font-size: 9pt;
+            font-weight: bold;
+            margin-bottom: 1mm;
+        }
+
+        .tororo .receipt-info {
+            font-size: 8pt;
+            margin-bottom: 0.5mm;
+        }
+
+        .receipt-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 9pt;
+            margin-bottom: 2mm;
+        }
+
+        .divider {
+            text-align: center;
+            margin: 3mm 0;
+            font-size: 9pt;
+        }
+
+        .items-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 4mm 0;
+            font-size: 9pt;
+        }
+
+        .items-table th {
+            text-align: left;
+            padding: 2mm 0;
+            font-weight: bold;
+        }
+
+        .cosmo .items-table th {
+            border-bottom: 1px solid #000;
+        }
+
+        .tororo .items-table th {
+            border-top: 1px solid #000;
+            border-bottom: 1px solid #000;
+        }
+
+        .items-table td {
+            padding: 1.5mm 0;
+        }
+
+        .cosmo .items-table td {
+            border-bottom: 1px dashed #ccc;
+        }
+
+        .items-table .text-right {
+            text-align: right;
+        }
+
+        .items-table .text-center {
+            text-align: center;
+        }
+
+        .item-code {
+            font-size: 7pt;
+            color: #666;
+        }
+
+        .total-row {
+            font-weight: bold;
+            font-size: 11pt;
+            border-top: 2px solid #000 !important;
+            border-bottom: 2px solid #000 !important;
+        }
+
+        .cosmo .total-row {
+            border-bottom: 2px solid #000 !important;
+        }
+
+        .receipt-footer {
+            text-align: center;
+            padding-top: 4mm;
+            margin-top: 4mm;
+            font-size: 9pt;
+        }
+
+        .cosmo .receipt-footer {
+            border-top: 2px dashed #000;
+        }
+
+        .tororo .receipt-footer {
+            border-top: 2px solid #000;
+        }
+
+        .payment-method {
+            text-align: center;
+            font-weight: bold;
+            margin: 3mm 0;
+            font-size: 10pt;
+        }
+
+        .day-label {
+            background: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+            margin: 20px 0 10px;
+            border-radius: 4px;
+            grid-column: 1 / -1;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>------</h1>
+        <h2>4-Day Field Visit Receipts</h2>
+        <p>Total: UGX 200,000 (50,000 per day)</p>
+        <p style="margin-top: 10px;">Cosmo Coffee Shop & Restaurant | Tororo Service Station</p>
+    </div>
+
+    <div class="controls">
+        <button onclick="window.print()">🖨️ Print All Receipts</button>
+        <button onclick="fillDates()">📅 Auto-Fill Dates</button>
+    </div>
+
+    <div class="receipts-container" id="receiptsContainer"></div>
+
+    <script>
+        const receiptsData = [
+            // DAY 1
+            {
+                day: 1,
+                type: 'cosmo',
+                receiptNo: 'CS-00101',
+                date: '',
+                time: '13:30',
+                server: 'Jane Doe',
+                mealType: 'LUNCH',
+                items: [
+                    { name: 'Main Course (Chicken)', qty: 1, price: 15000, amount: 15000 },
+                    { name: 'Fresh Juice', qty: 1, price: 5000, amount: 5000 },
+                    { name: 'Side Salad', qty: 1, price: 3000, amount: 3000 },
+                    { name: 'Dessert', qty: 1, price: 2000, amount: 2000 }
+                ],
+                total: 25000
+            },
+            {
+                day: 1,
+                type: 'cosmo',
+                receiptNo: 'CS-00102',
+                date: '',
+                time: '19:45',
+                server: 'James Okello',
+                mealType: 'DINNER',
+                items: [
+                    { name: 'Dinner Special (Fish)', qty: 1, price: 12000, amount: 12000 },
+                    { name: 'Soda', qty: 1, price: 3000, amount: 3000 },
+                    { name: 'Side Order (Fries)', qty: 1, price: 5000, amount: 5000 }
+                ],
+                total: 20000
+            },
+            {
+                day: 1,
+                type: 'tororo',
+                receiptNo: 'TSS-12345',
+                date: '',
+                time: '16:20',
+                cashier: 'Mary Nabwire',
+                items: [
+                    { name: 'Water Bottle', code: 'BEV001', qty: 1, price: 1500, total: 1500 },
+                    { name: 'Snack Pack', code: 'SNK045', qty: 1, price: 2000, total: 2000 },
+                    { name: 'Biscuits', code: 'SNK032', qty: 1, price: 1500, total: 1500 }
+                ],
+                total: 5000
+            },
+
+            // DAY 2
+            {
+                day: 2,
+                type: 'cosmo',
+                receiptNo: 'CS-00103',
+                date: '',
+                time: '13:15',
+                server: 'Sarah Auma',
+                mealType: 'LUNCH',
+                items: [
+                    { name: 'Main Course (Beef)', qty: 1, price: 16000, amount: 16000 },
+                    { name: 'Fresh Juice', qty: 1, price: 5000, amount: 5000 },
+                    { name: 'Soup', qty: 1, price: 4000, amount: 4000 }
+                ],
+                total: 25000
+            },
+            {
+                day: 2,
+                type: 'cosmo',
+                receiptNo: 'CS-00104',
+                date: '',
+                time: '20:00',
+                server: 'Peter Omondi',
+                mealType: 'DINNER',
+                items: [
+                    { name: 'Dinner Special (Pork)', qty: 1, price: 13000, amount: 13000 },
+                    { name: 'Drink', qty: 1, price: 4000, amount: 4000 },
+                    { name: 'Side Dish', qty: 1, price: 3000, amount: 3000 }
+                ],
+                total: 20000
+            },
+            {
+                day: 2,
+                type: 'tororo',
+                receiptNo: 'TSS-12346',
+                date: '',
+                time: '15:50',
+                cashier: 'David Wafula',
+                items: [
+                    { name: 'Energy Drink', code: 'BEV012', qty: 1, price: 3000, total: 3000 },
+                    { name: 'Chocolate Bar', code: 'SNK018', qty: 1, price: 2000, total: 2000 }
+                ],
+                total: 5000
+            },
+
+            // DAY 3
+            {
+                day: 3,
+                type: 'cosmo',
+                receiptNo: 'CS-00105',
+                date: '',
+                time: '12:45',
+                server: 'Grace Nekesa',
+                mealType: 'LUNCH',
+                items: [
+                    { name: 'Main Course (Pasta)', qty: 1, price: 14000, amount: 14000 },
+                    { name: 'Juice', qty: 1, price: 5000, amount: 5000 },
+                    { name: 'Garlic Bread', qty: 1, price: 4000, amount: 4000 },
+                    { name: 'Ice Cream', qty: 1, price: 2000, amount: 2000 }
+                ],
+                total: 25000
+            },
+            {
+                day: 3,
+                type: 'cosmo',
+                receiptNo: 'CS-00106',
+                date: '',
+                time: '19:30',
+                server: 'Martin Wanyama',
+                mealType: 'DINNER',
+                items: [
+                    { name: 'Grilled Chicken', qty: 1, price: 11000, amount: 11000 },
+                    { name: 'Soda', qty: 1, price: 3000, amount: 3000 },
+                    { name: 'Vegetable Mix', qty: 1, price: 6000, amount: 6000 }
+                ],
+                total: 20000
+            },
+            {
+                day: 3,
+                type: 'tororo',
+                receiptNo: 'TSS-12347',
+                date: '',
+                time: '16:10',
+                cashier: 'Rose Akello',
+                items: [
+                    { name: 'Chips', code: 'SNK025', qty: 1, price: 2500, total: 2500 },
+                    { name: 'Juice Box', code: 'BEV008', qty: 1, price: 2500, total: 2500 }
+                ],
+                total: 5000
+            },
+
+            // DAY 4
+            {
+                day: 4,
+                type: 'cosmo',
+                receiptNo: 'CS-00107',
+                date: '',
+                time: '13:00',
+                server: 'Betty Achan',
+                mealType: 'LUNCH',
+                items: [
+                    { name: 'Special Platter', qty: 1, price: 18000, amount: 18000 },
+                    { name: 'Fresh Juice', qty: 1, price: 5000, amount: 5000 },
+                    { name: 'Coffee', qty: 1, price: 2000, amount: 2000 }
+                ],
+                total: 25000
+            },
+            {
+                day: 4,
+                type: 'cosmo',
+                receiptNo: 'CS-00108',
+                date: '',
+                time: '19:00',
+                server: 'John Okumu',
+                mealType: 'DINNER',
+                items: [
+                    { name: 'Fish & Chips', qty: 1, price: 14000, amount: 14000 },
+                    { name: 'Soda', qty: 1, price: 3000, amount: 3000 },
+                    { name: 'Coleslaw', qty: 1, price: 3000, amount: 3000 }
+                ],
+                total: 20000
+            },
+            {
+                day: 4,
+                type: 'tororo',
+                receiptNo: 'TSS-12348',
+                date: '',
+                time: '15:30',
+                cashier: 'Joseph Musoke',
+                items: [
+                    { name: 'Bottled Water', code: 'BEV001', qty: 2, price: 1500, total: 3000 },
+                    { name: 'Candy Pack', code: 'SNK050', qty: 1, price: 2000, total: 2000 }
+                ],
+                total: 5000
+            }
+        ];
+
+        function fillDates() {
+            const startDate = prompt('Enter start date (YYYY-MM-DD):', new Date().toISOString().split('T')[0]);
+            if (!startDate) return;
+
+            const start = new Date(startDate);
+            receiptsData.forEach(receipt => {
+                const receiptDate = new Date(start);
+                receiptDate.setDate(start.getDate() + (receipt.day - 1));
+                receipt.date = receiptDate.toLocaleDateString('en-GB');
+            });
+
+            generateAllReceipts();
+        }
+
+        function generateCosmoReceipt(data) {
+            let itemsHTML = '';
+            data.items.forEach(item => {
+                itemsHTML += `
+                    <tr>
+                        <td>${item.name}</td>
+                        <td class="text-center">${item.qty}</td>
+                        <td class="text-right">${item.price.toLocaleString()}</td>
+                        <td class="text-right">${item.amount.toLocaleString()}</td>
+                    </tr>
+                `;
+            });
+
+            return `
+                <div class="receipt cosmo">
+                    <div class="receipt-header">
+                        <div class="receipt-title">☕ COSMO COFFEE SHOP</div>
+                        <div class="receipt-subtitle">& RESTAURANT</div>
+                        <div class="receipt-info">Tororo Town, Eastern Uganda</div>
+                        <div class="receipt-info">Tel: +256-XXX-XXXXXX</div>
+                    </div>
+
+                    <div class="receipt-meta">
+                        <div>Receipt: ${data.receiptNo}</div>
+                        <div>${data.date || '[DATE]'}</div>
+                    </div>
+                    <div class="receipt-meta">
+                        <div>Server: ${data.server}</div>
+                        <div>${data.time}</div>
+                    </div>
+                    <div style="text-align: center; margin: 3mm 0; font-size: 10pt; font-weight: bold;">
+                        ${data.mealType}
+                    </div>
+
+                    <table class="items-table">
+                        <thead>
+                            <tr>
+                                <th>ITEM</th>
+                                <th class="text-center">QTY</th>
+                                <th class="text-right">PRICE</th>
+                                <th class="text-right">AMT</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${itemsHTML}
+                            <tr class="total-row">
+                                <td colspan="3">TOTAL</td>
+                                <td class="text-right">UGX ${data.total.toLocaleString()}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="payment-method">
+                        PAYMENT: CASH
+                    </div>
+
+                    <div class="receipt-footer">
+                        <div style="font-weight: bold; margin-bottom: 2mm;">💚 Thank You! 💚</div>
+                        <div style="font-size: 9pt;">Please Come Again</div>
+                        <div style="font-size: 8pt; margin-top: 3mm;">------</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function generateTororoReceipt(data) {
+            let itemsHTML = '';
+            data.items.forEach(item => {
+                itemsHTML += `
+                    <tr>
+                        <td>
+                            ${item.name}<br>
+                            <span class="item-code">${item.code}</span>
+                        </td>
+                        <td class="text-center">${item.qty}</td>
+                        <td class="text-right">${item.price.toLocaleString()}</td>
+                        <td class="text-right">${item.total.toLocaleString()}</td>
+                    </tr>
+                `;
+            });
+
+            const itemCount = data.items.reduce((sum, item) => sum + item.qty, 0);
+
+            return `
+                <div class="receipt tororo">
+                    <div class="receipt-header">
+                        <div class="receipt-title">⛽ TORORO SERVICE STATION</div>
+                        <div class="receipt-subtitle">SUPERMARKET & CONVENIENCE</div>
+                        <div class="receipt-info">Tororo-Mbale Highway</div>
+                        <div class="receipt-info">Eastern Uganda</div>
+                        <div class="receipt-info">TIN: 1000XXXXXX</div>
+                        <div class="receipt-info">Tel: +256-XXX-XXXXXX</div>
+                    </div>
+
+                    <div class="receipt-meta">
+                        <div>Receipt: ${data.receiptNo}</div>
+                        <div>${data.date || '[DATE]'}</div>
+                    </div>
+                    <div class="receipt-meta">
+                        <div>Cashier: ${data.cashier}</div>
+                        <div>${data.time}</div>
+                    </div>
+
+                    <div class="divider">═══════════════════════════════</div>
+
+                    <table class="items-table">
+                        <thead>
+                            <tr>
+                                <th>ITEM</th>
+                                <th class="text-center">QTY</th>
+                                <th class="text-right">PRICE</th>
+                                <th class="text-right">TOTAL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${itemsHTML}
+                        </tbody>
+                    </table>
+
+                    <div class="divider">───────────────────────────────</div>
+
+                    <table style="width: 100%; font-size: 9pt;">
+                        <tr style="border-top: 1px dashed #000; padding-top: 2mm;">
+                            <td>SUBTOTAL:</td>
+                            <td class="text-right">UGX ${data.total.toLocaleString()}</td>
+                        </tr>
+                        <tr>
+                            <td>VAT (0%):</td>
+                            <td class="text-right">UGX 0</td>
+                        </tr>
+                        <tr class="total-row">
+                            <td>TOTAL:</td>
+                            <td class="text-right">UGX ${data.total.toLocaleString()}</td>
+                        </tr>
+                    </table>
+
+                    <div style="margin: 3mm 0; font-size: 9pt;">
+                        <div style="display: flex; justify-content: space-between;">
+                            <span>CASH:</span>
+                            <span>UGX ${data.total.toLocaleString()}</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span>CHANGE:</span>
+                            <span>UGX 0</span>
+                        </div>
+                    </div>
+
+                    <div style="text-align: center; font-size: 8pt; margin: 3mm 0;">Items Sold: ${itemCount}</div>
+
+                    <div class="receipt-footer">
+                        <div style="font-weight: bold; margin-bottom: 2mm;">⭐ THANK YOU ⭐</div>
+                        <div style="font-size: 8pt;">FOR SHOPPING WITH US</div>
+                        <div style="font-size: 8pt; margin-top: 2mm;">Safe Travels • Open 24/7</div>
+                        <div style="font-size: 7pt; margin-top: 3mm;">Visit us again!</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function generateAllReceipts() {
+            const container = document.getElementById('receiptsContainer');
+            container.innerHTML = '';
+
+            let currentDay = 0;
+            receiptsData.forEach(receipt => {
+                if (receipt.day !== currentDay) {
+                    currentDay = receipt.day;
+                    const dayLabel = document.createElement('div');
+                    dayLabel.className = 'day-label';
+                    dayLabel.textContent = `DAY ${currentDay} - ${receipt.date || '[DATE]'} - UGX 50,000`;
+                    container.appendChild(dayLabel);
+                }
+
+                const receiptDiv = document.createElement('div');
+                if (receipt.type === 'cosmo') {
+                    receiptDiv.innerHTML = generateCosmoReceipt(receipt);
+                } else {
+                    receiptDiv.innerHTML = generateTororoReceipt(receipt);
+                }
+                container.appendChild(receiptDiv.firstElementChild);
+            });
+        }
+
+        // Generate receipts on load
+        generateAllReceipts();
+    </script>
+</body>
+</html>
