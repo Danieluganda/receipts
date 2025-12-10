@@ -435,34 +435,288 @@
         .template-12 .shop-name { font-size: 16pt; font-weight: bold; color: #9c27b0; }
         .template-12 .receipt-footer { text-align: center; border-top: 3px dotted #9c27b0; padding-top: 5mm; margin-top: 5mm; color: #9c27b0; }
 
-        /* Templates 13-18: Uganda-inspired */
-        .template-13 { width: 80mm; font-size: 9pt; font-family: Arial, sans-serif; }
-        .template-13 .receipt-header { text-align: center; font-weight: bold; padding: 3mm; background: #f0f0f0; margin: -5mm -5mm 4mm -5mm; }
-        .template-13 .shop-name { font-size: 14pt; }
+        /* Template 13: Service Station Style */
+        .template-13 {
+            width: 80mm;
+            background: white;
+            padding: 5mm;
+            font-family: 'Courier New', monospace;
+            font-size: 9pt;
+            line-height: 1.3;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
 
-        .template-14 { width: 80mm; font-size: 9pt; }
-        .template-14 .receipt-header { text-align: center; border: 2px solid #000; padding: 3mm; background: #f5f5f5; }
-        .template-14 .invoice-table { width: 100%; border-collapse: collapse; margin: 3mm 0; }
-        .template-14 .invoice-table th, .template-14 .invoice-table td { border: 1px solid #000; padding: 2mm; font-size: 8pt; }
-        .template-14 .invoice-table th { background: #e0e0e0; }
+        .template-13 .receipt-header {
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 4mm;
+        }
 
-        .template-15 { width: 80mm; font-size: 9pt; }
-        .template-15 .receipt-header { text-align: center; padding-bottom: 3mm; margin-bottom: 3mm; border-bottom: 1px solid #000; }
+        .template-13 .company-name {
+            font-size: 14pt;
+            font-weight: bold;
+            margin-bottom: 2mm;
+        }
 
-        .template-16 { width: 80mm; font-size: 9pt; }
-        .template-16 .receipt-header { text-align: center; }
-        .template-16 .shop-name { font-size: 16pt; font-weight: bold; letter-spacing: 1px; }
+        .template-13 .address-info {
+            font-size: 8pt;
+            margin-bottom: 1mm;
+        }
 
-        .template-17 { width: 80mm; font-size: 9pt; }
-        .template-17 .receipt-header { text-align: center; background: #e8e8e8; padding: 4mm; margin: -5mm -5mm 4mm -5mm; }
-        .template-17 .shop-name { font-size: 14pt; font-weight: bold; }
+        .template-13 .section-divider {
+            border-top: 1px solid #000;
+            border-bottom: 1px solid #000;
+            padding: 2mm 0;
+            margin: 3mm 0;
+            font-weight: bold;
+        }
 
-        .template-18 { width: 80mm; font-size: 9pt; }
-        .template-18 .receipt-header { text-align: center; border-bottom: 3px solid #4a90e2; padding-bottom: 3mm; margin-bottom: 3mm; }
-        .template-18 .shop-name { font-size: 15pt; font-weight: bold; color: #4a90e2; }
-        .template-18 .blue-table { width: 100%; border: 2px solid #4a90e2; border-collapse: collapse; }
-        .template-18 .blue-table th { background: #4a90e2; color: white; padding: 2mm; }
-        .template-18 .blue-table td { border: 1px solid #4a90e2; padding: 2mm; }
+        .template-13 .info-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 1mm 0;
+            font-size: 8pt;
+        }
+
+        .template-13 .barcode-section {
+            text-align: center;
+            margin: 4mm 0;
+        }
+
+        /* Template 14: Handwritten Invoice Style */
+        .template-14 {
+            width: 80mm;
+            background: white;
+            padding: 5mm;
+            font-family: Arial, sans-serif;
+            font-size: 9pt;
+            line-height: 1.4;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .template-14 .receipt-header {
+            text-align: center;
+            margin-bottom: 4mm;
+            padding: 3mm;
+            background: #f0f0f0;
+            border: 2px solid #333;
+        }
+
+        .template-14 .company-name {
+            font-size: 13pt;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .template-14 .invoice-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 4mm 0;
+        }
+
+        .template-14 .invoice-table th,
+        .template-14 .invoice-table td {
+            border: 1px solid #000;
+            padding: 2mm;
+            text-align: left;
+            font-size: 8pt;
+        }
+
+        .template-14 .invoice-table th {
+            background: #e0e0e0;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .template-14 .total-row {
+            font-weight: bold;
+            background: #f5f5f5;
+        }
+
+        /* Template 15: QR + Barcode Modern */
+        .template-15 {
+            width: 80mm;
+            background: white;
+            padding: 5mm;
+            font-family: 'Courier New', monospace;
+            font-size: 9pt;
+            line-height: 1.3;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .template-15 .receipt-header {
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 4mm;
+        }
+
+        .template-15 .company-name {
+            font-size: 15pt;
+            font-weight: bold;
+        }
+
+        .template-15 .qr-section {
+            text-align: center;
+            margin: 4mm 0;
+            padding: 3mm;
+            background: #f9f9f9;
+        }
+
+        .template-15 .items-section {
+            margin: 4mm 0;
+        }
+
+        .template-15 .item-line {
+            display: flex;
+            justify-content: space-between;
+            padding: 2mm 0;
+            border-bottom: 1px dotted #999;
+        }
+
+        .template-15 .totals-section {
+            margin-top: 4mm;
+            padding-top: 3mm;
+            border-top: 2px solid #000;
+        }
+
+        /* Template 16: Restaurant Clean */
+        .template-16 {
+            width: 80mm;
+            background: white;
+            padding: 5mm;
+            font-family: Arial, sans-serif;
+            font-size: 9pt;
+            line-height: 1.4;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .template-16 .receipt-header {
+            text-align: center;
+            margin-bottom: 4mm;
+        }
+
+        .template-16 .company-name {
+            font-size: 16pt;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .template-16 .contact-line {
+            font-size: 8pt;
+            color: #555;
+        }
+
+        .template-16 .meta-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 8pt;
+            margin: 3mm 0;
+            padding: 2mm 0;
+            border-top: 1px dashed #999;
+            border-bottom: 1px dashed #999;
+        }
+
+        .template-16 .items-table {
+            width: 100%;
+            margin: 3mm 0;
+        }
+
+        .template-16 .items-table td {
+            padding: 1.5mm 0;
+            font-size: 9pt;
+        }
+
+        .template-16 .barcode-bottom {
+            text-align: center;
+            margin-top: 4mm;
+        }
+
+        /* Template 17: Hotel Invoice */
+        .template-17 {
+            width: 80mm;
+            background: white;
+            padding: 5mm;
+            font-family: Arial, sans-serif;
+            font-size: 9pt;
+            line-height: 1.4;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .template-17 .receipt-header {
+            text-align: center;
+            background: #e8e8e8;
+            padding: 4mm;
+            margin: -5mm -5mm 4mm -5mm;
+        }
+
+        .template-17 .company-name {
+            font-size: 14pt;
+            font-weight: bold;
+        }
+
+        .template-17 .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 1.5mm 0;
+            font-size: 8pt;
+        }
+
+        .template-17 .detail-row .label {
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #555;
+        }
+
+        .template-17 .items-section {
+            margin: 4mm 0;
+            padding: 3mm;
+            border: 1px solid #ddd;
+        }
+
+        /* Template 18: Blue Border Table */
+        .template-18 {
+            width: 80mm;
+            background: white;
+            padding: 5mm;
+            font-family: Arial, sans-serif;
+            font-size: 9pt;
+            line-height: 1.4;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .template-18 .receipt-header {
+            text-align: center;
+            margin-bottom: 4mm;
+            padding-bottom: 3mm;
+            border-bottom: 3px solid #4a90e2;
+        }
+
+        .template-18 .company-name {
+            font-size: 15pt;
+            font-weight: bold;
+            color: #4a90e2;
+        }
+
+        .template-18 .blue-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 4mm 0;
+            border: 2px solid #4a90e2;
+        }
+
+        .template-18 .blue-table th,
+        .template-18 .blue-table td {
+            border: 1px solid #4a90e2;
+            padding: 2mm;
+            font-size: 8pt;
+        }
+
+        .template-18 .blue-table th {
+            background: #4a90e2;
+            color: white;
+            font-weight: bold;
+        }
 
         /* Templates 19-24: PDF-inspired unique styles */
         .template-19 { width: 80mm; font-size: 9pt; background: #ffb6c1; } /* Pink receipt (Riya Rahi) */
@@ -567,6 +821,37 @@
             .preview-section { background: white; box-shadow: none; padding: 0; }
             .receipt { box-shadow: none; margin: 0; page-break-after: always; }
             .no-print { display: none; }
+        }
+
+        /* Responsive / Mobile-friendly adjustments */
+        @media (max-width: 900px) {
+            body { padding: 10px; }
+            .container { grid-template-columns: 1fr; gap: 16px; }
+            .form-section { max-height: none; overflow: visible; }
+            .preview-section { max-height: none; padding: 16px; }
+            .template-grid { grid-template-columns: repeat(2, 1fr); }
+            .template-card { min-height: 64px; padding: 8px; }
+            .form-row { grid-template-columns: 1fr; }
+            .section-header { margin: 12px -20px 10px -20px; }
+            .btn-group { grid-template-columns: 1fr 1fr; }
+            .preview-actions { flex-direction: column; gap: 8px; }
+            button { width: 100%; }
+            .item-row { grid-template-columns: 1fr 1fr 1fr; }
+            .logo-preview { max-width: 140px; }
+            .receipt { width: 100%; padding: 10px; box-shadow: none; }
+            .receipt .company-name { font-size: 14pt; }
+            .items-table th, .items-table td { font-size: 9pt; }
+        }
+
+        @media (max-width: 480px) {
+            .template-grid { grid-template-columns: repeat(1, 1fr); }
+            .template-card { min-height: 56px; }
+            .form-row { grid-template-columns: 1fr; gap: 8px; }
+            input, select, textarea { padding: 12px; font-size: 15px; }
+            button { padding: 14px 16px; font-size: 16px; }
+            .item-row { grid-template-columns: 1fr 1fr; }
+            .items-table th, .items-table td { font-size: 8pt; }
+            .receipt { padding: 8px; font-size: 12pt; }
         }
     </style>
 </head>
@@ -687,6 +972,9 @@
                         <label>Room Number:</label>
                         <input type="text" id="roomNumber" placeholder="Room 201">
                     </div>
+                </div>
+                <div style="margin-top:12px;">
+                    <button onclick="generateAndShow()" class="btn-success" style="width:100%; padding:12px; font-size:15px;">🧾 Create Receipt</button>
                 </div>
             </div>
 
@@ -1060,6 +1348,16 @@ Goods once sold are not returnable</textarea>
             showNotification('Receipt number regenerated');
         }
 
+        async function generateAndShow() {
+            // Generate the receipt preview and bring it into view (wait until barcode/QR rendered)
+            await generateReceipt();
+            const preview = document.getElementById('receiptPreview');
+            if (preview) {
+                preview.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+            showNotification('Receipt created');
+        }
+
         function calculateItemAmount(itemEntry) {
             const qty = parseFloat(itemEntry.querySelector('.item-qty').value) || 0;
             const price = parseFloat(itemEntry.querySelector('.item-price').value) || 0;
@@ -1140,7 +1438,9 @@ Goods once sold are not returnable</textarea>
             item.querySelector('.item-price').addEventListener('input', () => calculateItemAmount(item));
         });
 
-        async function generateReceipt() {
+        async function generateReceipt(uniqueSuffix) {
+            // allow being used as an event handler (which receives an event object)
+            if (typeof uniqueSuffix !== 'string') uniqueSuffix = '';
             const shopName = document.getElementById('shopName').value;
             const shopTagline = document.getElementById('shopTagline').value;
             const shopAddress = document.getElementById('shopAddress').value;
@@ -1214,14 +1514,18 @@ Goods once sold are not returnable</textarea>
                 tableRoomHTML += '</div>';
             }
 
+            // Unique element IDs to avoid collisions when rendering multiple receipts
+            const suf = uniqueSuffix ? `-${uniqueSuffix}` : '';
             let barcodeHTML = '';
+            const barcodeId = includeBarcode ? `barcode${suf}` : '';
             if (includeBarcode) {
-                barcodeHTML = `<div class="barcode"><svg id="barcode"></svg></div>`;
+                barcodeHTML = `<div class="barcode"><svg id="${barcodeId}"></svg></div>`;
             }
 
             let qrHTML = '';
+            const qrId = includeQR ? `qrcode${suf}` : '';
             if (includeQR) {
-                qrHTML = `<div class="qr-code"><canvas id="qrcode"></canvas></div>`;
+                qrHTML = `<div class="qr-code"><canvas id="${qrId}"></canvas></div>`;
             }
 
             const footerLines = footerMessage.split('\n');
@@ -1260,80 +1564,240 @@ Goods once sold are not returnable</textarea>
                 receiptBadgeHTML = '<div class="receipt-badge">RECEIPT</div>';
             }
 
-            const receiptHTML = `
-                <div class="receipt template-${currentTemplate}">
-                    ${logoHTML}
-                    
-                    <div class="receipt-header">
-                        ${shopInfoHTML}
-                        ${receiptBadgeHTML}
+            let receiptHTML = '';
+
+            // Use specialized layouts for Uganda templates (13-18) using styles from uganda_templates.html
+            if (currentTemplate >= 13 && currentTemplate <= 18) {
+                switch (currentTemplate) {
+                    case 13:
+                        // Service Station style
+                        let itemsBlock13 = '';
+                        if (items.length) {
+                            itemsBlock13 += `<div style="border-top: 1px dashed #000; border-bottom: 1px dashed #000; padding: 2mm 0; margin: 3mm 0;">`;
+                            itemsBlock13 += `<div class="info-row" style="font-weight: bold;">`;
+                            itemsBlock13 += `<span>Item</span><span>Qty Rate Amount</span>`;
+                            itemsBlock13 += `</div>`;
+                            items.forEach(it => {
+                                itemsBlock13 += `<div class="info-row"><span>${it.name}</span><span>${it.qty} x ${currency}${Number(it.price).toLocaleString()}</span></div>`;
+                                itemsBlock13 += `<div class="info-row"><span></span><span>${currency} ${Number(it.amount).toLocaleString()}</span></div>`;
+                            });
+                            itemsBlock13 += `</div>`;
+                        }
+
+                        receiptHTML = `
+                            <div class="receipt template-13">
+                                ${logoHTML}
+                                <div class="receipt-header">
+                                    <div class="company-name">${shopName || 'SERVICE STATION'}</div>
+                                    ${shopAddress ? shopAddress.split('\n').map(l=>`<div class="address-info">${l}</div>`).join('') : ''}
+                                    ${shopPhone ? `<div class="address-info">Tel: ${shopPhone}</div>` : ''}
+                                    ${shopEmail ? `<div class="address-info">${shopEmail}</div>` : ''}
+                                </div>
+
+                                <div class="section-divider">${shopTagline || 'CASH SALE / INVOICE'}</div>
+
+                                <div class="info-row"><span>Receipt No:</span><span>${receiptNo}</span></div>
+                                <div class="info-row"><span>Date:</span><span>${date} ${time}</span></div>
+                                <div class="info-row"><span>User: ${servedBy || ''}</span><span>Order No: ${tableNumber || ''}</span></div>
+
+                                ${itemsBlock13}
+
+                                <div class="info-row" style="font-weight: bold; font-size: 10pt;"><span>TOTAL:</span><span>${currency} ${total.toLocaleString()}</span></div>
+
+                                <div class="barcode-section">${barcodeHTML || ''}<div style="font-size: 7pt; margin-top: 2mm;">${footerLines[0] || 'Thank you, Come Again!'}</div></div>
+                            </div>
+                        `;
+                        break;
+
+                    case 14:
+                        // Handwritten Invoice (table)
+                        let rows14 = '';
+                        items.forEach(it => {
+                            rows14 += `<tr><td>${it.qty}</td><td>${it.name}</td><td>${Number(it.price).toLocaleString()}</td><td>${Number(it.amount).toLocaleString()}</td></tr>`;
+                        });
+                        receiptHTML = `
+                            <div class="receipt template-14">
+                                ${logoHTML}
+                                <div class="receipt-header"><div class="company-name">${shopTagline || 'Cash Sale / Invoice'}</div><div style="font-size:8pt; margin-top:2mm;">${shopName || ''}</div></div>
+                                <div style="font-size:8pt; margin:3mm 0;">
+                                    <div>Order no: ${tableNumber || ''}</div>
+                                    <div>Date: ${date}</div>
+                                    <div>M/s: ___________________</div>
+                                    <div>Address: ___________________</div>
+                                </div>
+                                <table class="invoice-table"><thead><tr><th>QTY</th><th>Particulars</th><th>Rate</th><th>Amount</th></tr></thead><tbody>
+                                    ${rows14}
+                                    <tr class="total-row"><td colspan="2">TOTAL</td><td></td><td>${currency} ${total.toLocaleString()}</td></tr>
+                                </tbody></table>
+                                <div style="margin-top:4mm; font-size:7pt; border-top:1px dotted #999; padding-top:2mm;">Signature: ___________________<div style="margin-top:2mm;">Goods once sold are not returnable</div></div>
+                            </div>
+                        `;
+                        break;
+
+                    case 15:
+                        // Modern QR + Barcode
+                        let itemLines15 = '';
+                        items.forEach(it => {
+                            itemLines15 += `<div class="item-line"><span>${it.name}</span><span>${Number(it.amount).toLocaleString()}</span></div>`;
+                        });
+                        receiptHTML = `
+                            <div class="receipt template-15">
+                                ${logoHTML}
+                                <div class="receipt-header"><div class="company-name">${shopName || ''}</div><div style="font-size:8pt;">${shopAddress ? shopAddress.split('\n')[0] : ''}</div></div>
+                                <div style="text-align:center; font-size:11pt; font-weight:bold; margin:3mm 0;">Till Sales</div>
+                                <div style="font-size:8pt; margin:2mm 0;">${shopTIN ? `TIN: ${shopTIN}` : ''}</div>
+                                <div class="items-section">${itemLines15}</div>
+                                <div class="totals-section"><div class="item-line" style="font-weight:bold;"><span>Total:</span><span>${currency} ${total.toLocaleString()}</span></div></div>
+                                <div class="qr-section">${qrHTML || ''}</div>
+                                <div style="text-align:center; font-size:7pt; margin-top:3mm;">${footerLines.join('<br>')}</div>
+                            </div>
+                        `;
+                        break;
+
+                    case 16:
+                        // Restaurant Clean
+                        let rows16 = '';
+                        items.forEach(it => {
+                            rows16 += `<tr><td>${it.name}</td><td style="text-align:right;">${it.qty} x ${currency}${Number(it.price).toLocaleString()}</td></tr>`;
+                        });
+                        receiptHTML = `
+                            <div class="receipt template-16">
+                                ${logoHTML}
+                                <div class="receipt-header"><div class="company-name">${shopName || ''}</div><div class="contact-line">${shopAddress ? shopAddress.split('\n')[0] : ''}</div></div>
+                                <div class="meta-info"><div><div>Receipt No: ${receiptNo}</div><div>User: ${servedBy || ''}</div></div><div style="text-align:right;"><div>${date} ${time}</div><div>Order No: ${tableNumber || ''}</div></div></div>
+                                <table class="items-table">${rows16}</table>
+                                <div style="border-top:2px solid #000; border-bottom:2px solid #000; padding:2mm 0; margin:3mm 0;"><table style="width:100%;"><tr style="font-weight:bold;"><td>Items count: ${items.length}</td><td></td></tr><tr style="font-weight:bold; font-size:11pt;"><td>TOTAL:</td><td style="text-align:right;">${currency} ${total.toLocaleString()}</td></tr></table></div>
+                                <div class="barcode-bottom">${barcodeHTML || ''}<div style="font-size:7pt; margin-top:2mm;">${receiptNo}</div></div>
+                            </div>
+                        `;
+                        break;
+
+                    case 17:
+                        // Hotel Invoice
+                        let itemRows17 = '';
+                        items.forEach(it => {
+                            itemRows17 += `<tr><td>${it.name}</td><td>${it.qty}</td><td>${Number(it.price).toLocaleString()}</td><td>${Number(it.amount).toLocaleString()}</td></tr>`;
+                        });
+                        receiptHTML = `
+                            <div class="receipt template-17">
+                                ${logoHTML}
+                                <div class="receipt-header"><div class="company-name">${shopName || 'HOTEL'}</div></div>
+                                <div style="margin:3mm 0;"><div class="detail-row"><span class="label">Invoice No:</span><span>${receiptNo}</span></div><div class="detail-row"><span class="label">Date:</span><span>${date}</span></div><div class="detail-row"><span class="label">Name:</span><span>${servedBy || '___________________'}</span></div></div>
+                                <div class="items-section"><table style="width:100%; font-size:8pt;">${itemRows17}</table></div>
+                                <div style="border-top:2px solid #000; margin-top:3mm; padding-top:2mm;"><div class="detail-row" style="font-size:9pt;"><span style="font-weight:bold;">Sub-total:</span><span>${currency} ${subtotal.toLocaleString()}</span></div><div class="detail-row" style="font-size:11pt; font-weight:bold;"><span>TOTAL BILL:</span><span>${currency} ${total.toLocaleString()}</span></div></div>
+                            </div>
+                        `;
+                        break;
+
+                    case 18:
+                        // Blue Border Table
+                        let rows18 = '';
+                        items.forEach(it => {
+                            rows18 += `<tr><td>${it.qty}</td><td>${it.name}</td><td>${Number(it.price).toLocaleString()}</td><td>${Number(it.amount).toLocaleString()}</td></tr>`;
+                        });
+                        receiptHTML = `
+                            <div class="receipt template-18">
+                                ${logoHTML}
+                                <div class="receipt-header"><div class="company-name">${shopName || ''}</div><div style="font-size:8pt; margin-top:2mm;">${shopTagline || ''}</div></div>
+                                <div style="font-size:8pt; margin:3mm 0;"><div style="display:flex; justify-content:space-between;"><span>No: ${receiptNo}</span><span>M/s: ___________________</span></div></div>
+                                <table class="blue-table"><thead><tr><th>QTY</th><th>Particulars</th><th>Rate</th><th>Amount</th></tr></thead><tbody>${rows18}<tr style="font-weight:bold;"><td colspan="2">TOTAL</td><td></td><td>${currency} ${total.toLocaleString()}</td></tr></tbody></table>
+                                <div style="border:2px solid #4a90e2; padding:3mm; margin-top:3mm; font-weight:bold;"><div style="display:flex; justify-content:space-between;"><span>E.&.O.E</span><span>TOTAL: ${currency} ${total.toLocaleString()}</span></div></div>
+                                <div class="signature-section" style="margin-top:6px;"><div style="font-size:7pt;"><div>Signature: ___________________</div><div style="margin-top:2mm;">Goods once sold are not returnable</div></div></div>
+                            </div>
+                        `;
+                        break;
+                }
+            } else {
+                // default layout for other templates
+                receiptHTML = `
+                    <div class="receipt template-${currentTemplate}">
+                        ${logoHTML}
+                        
+                        <div class="receipt-header">
+                            ${shopInfoHTML}
+                            ${receiptBadgeHTML}
+                        </div>
+
+                        ${qrHTML}
+                        ${tableRoomHTML}
+
+                        <div class="receipt-meta">
+                            <div>Receipt: ${receiptNo}</div>
+                            <div>${date}</div>
+                        </div>
+                        <div class="receipt-meta">
+                            <div>Served By: ${servedBy}</div>
+                            <div>${time}</div>
+                        </div>
+
+                        <table class="items-table">
+                            <thead>
+                                <tr>
+                                    <th>ITEM</th>
+                                    <th class="text-center">QTY</th>
+                                    <th class="text-right">PRICE</th>
+                                    <th class="text-right">AMT</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${itemsHTML}
+                                ${totalsHTML}
+                                <tr class="total-row">
+                                    <td colspan="3">TOTAL</td>
+                                    <td class="text-right">${currency} ${total.toLocaleString()}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div style="text-align: center; font-weight: bold; margin: 3mm 0; font-size: 10pt;">
+                            PAYMENT: ${paymentMethod}
+                        </div>
+
+                        ${barcodeHTML}
+
+                        <div class="receipt-footer">
+                            ${footerHTML}
+                        </div>
                     </div>
-
-                    ${qrHTML}
-                    ${tableRoomHTML}
-
-                    <div class="receipt-meta">
-                        <div>Receipt: ${receiptNo}</div>
-                        <div>${date}</div>
-                    </div>
-                    <div class="receipt-meta">
-                        <div>Served By: ${servedBy}</div>
-                        <div>${time}</div>
-                    </div>
-
-                    <table class="items-table">
-                        <thead>
-                            <tr>
-                                <th>ITEM</th>
-                                <th class="text-center">QTY</th>
-                                <th class="text-right">PRICE</th>
-                                <th class="text-right">AMT</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${itemsHTML}
-                            ${totalsHTML}
-                            <tr class="total-row">
-                                <td colspan="3">TOTAL</td>
-                                <td class="text-right">${currency} ${total.toLocaleString()}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <div style="text-align: center; font-weight: bold; margin: 3mm 0; font-size: 10pt;">
-                        PAYMENT: ${paymentMethod}
-                    </div>
-
-                    ${barcodeHTML}
-
-                    <div class="receipt-footer">
-                        ${footerHTML}
-                    </div>
-                </div>
-            `;
+                `;
+            }
 
             document.getElementById('receiptPreview').innerHTML = receiptHTML;
 
-            if (includeBarcode) {
+            // Return a promise that resolves after barcode/QR generation finishes
+            return new Promise((resolve) => {
                 setTimeout(() => {
-                    JsBarcode("#barcode", receiptNo, {
-                        format: "CODE128",
-                        width: 1.5,
-                        height: 40,
-                        displayValue: true,
-                        fontSize: 12
-                    });
-                }, 100);
-            }
+                    try {
+                        if (includeBarcode) {
+                            const sel = `#${barcodeId}`;
+                            if (document.querySelector(sel)) {
+                                JsBarcode(sel, receiptNo, {
+                                    format: "CODE128",
+                                    width: 1.5,
+                                    height: 40,
+                                    displayValue: true,
+                                    fontSize: 12
+                                });
+                            }
+                        }
 
-            if (includeQR) {
-                setTimeout(() => {
-                    QRCode.toCanvas(document.getElementById('qrcode'), qrData, {
-                        width: 100,
-                        margin: 1
-                    });
-                }, 100);
-            }
+                        if (includeQR) {
+                            const canvasEl = document.getElementById(qrId);
+                            if (canvasEl) {
+                                QRCode.toCanvas(canvasEl, qrData, {
+                                    width: 100,
+                                    margin: 1
+                                }).then(() => resolve()).catch(() => resolve());
+                                // QR promise will resolve when done; return early
+                                return;
+                            }
+                        }
+                    } catch (e) {
+                        // ignore and resolve
+                    }
+                    resolve();
+                }, 120);
+            });
         }
 
         function saveReceipt() {
@@ -1563,7 +2027,7 @@ Goods once sold are not returnable</textarea>
             }
         }
 
-        function generateBulk() {
+        async function generateBulk() {
             const count = parseInt(document.getElementById('bulkCount').value) || 1;
             if (count < 1 || count > 50) {
                 alert('Please enter a number between 1 and 50');
@@ -1572,16 +2036,34 @@ Goods once sold are not returnable</textarea>
 
             const preview = document.getElementById('receiptPreview');
             preview.innerHTML = '';
-
-            // Generate unique receipt numbers for each copy
             for (let i = 0; i < count; i++) {
                 const genNo = generateReceiptNumber();
                 document.getElementById('receiptNo').value = genNo;
-                generateReceipt();
-                setTimeout(() => {
-                    const rpt = document.querySelector('.receipt');
-                    if (rpt) preview.innerHTML += rpt.outerHTML;
-                }, i * 120);
+                // create a short unique suffix for element ids
+                const uniqueId = `${Date.now().toString(36)}${Math.random().toString(36).slice(2,7)}${i}`;
+                // await receipt generation (barcode/QR created in DOM)
+                await generateReceipt(uniqueId);
+
+                // clone the generated receipt so we can convert canvas -> img without losing original
+                const rpt = document.querySelector('.receipt');
+                if (!rpt) continue;
+                const clone = rpt.cloneNode(true);
+
+                // If original had a canvas (QR), extract its dataURL and insert into clone
+                const origCanvas = rpt.querySelector('canvas');
+                const cloneCanvas = clone.querySelector('canvas');
+                if (origCanvas && cloneCanvas && typeof origCanvas.toDataURL === 'function') {
+                    try {
+                        const dataUrl = origCanvas.toDataURL();
+                        const img = document.createElement('img');
+                        img.src = dataUrl;
+                        cloneCanvas.parentNode.replaceChild(img, cloneCanvas);
+                    } catch (e) {
+                        // ignore canvas conversion errors
+                    }
+                }
+
+                preview.innerHTML += clone.outerHTML;
             }
 
             showNotification(`Generated ${count} receipts successfully!`);
